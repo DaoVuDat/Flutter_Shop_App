@@ -46,12 +46,23 @@ class Products with ChangeNotifier {
     return _items.where((prodItem) => prodItem.isFavorite).toList();
   }
 
-  void addProduct() {
-    // _items.add(value);
+  void addProduct(Product newProduct) {
+    // _items.add(newProduct);
+
+    final a = Product(
+      id: DateTime.now().toString(),
+      imageUrl: newProduct.imageUrl,
+      price: newProduct.price,
+      description: newProduct.description,
+      title: newProduct.title,
+    );
+
+    _items.add(a);
+
     notifyListeners();
   }
 
-  Product findById(String id){
+  Product findById(String id) {
     return _items.firstWhere((prod) => prod.id == id);
   }
 }

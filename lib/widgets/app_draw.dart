@@ -20,7 +20,7 @@ class AppDraw extends StatelessWidget {
             onTap: () => Navigator.of(context).pushReplacementNamed('/'),
           ),
           ListTile(
-            leading: Icon(Icons.shop),
+            leading: Icon(Icons.shopping_cart),
             title: Text("Order"),
             onTap: () => Navigator.of(context)
                 .pushReplacementNamed(OrderScreen.routeName),
