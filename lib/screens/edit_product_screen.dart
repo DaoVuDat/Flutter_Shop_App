@@ -101,12 +101,26 @@ class _EditProductScreenState extends State<EditProductScreen> {
     });
 
     if (_existingProduct.id != null) {
-      Provider.of<Products>(context)
-          .updateProduct(_existingProduct.id, _existingProduct);
-      setState(() {
-        _isLoading = false;
-      });
-      Navigator.of(context).pop();
+      // update an existing product
+      try {
+        await Provider.of<Products>(context)
+            .updateProduct(_existingProduct.id, _existingProduct);
+      } catch (error) {
+        await showDialog(
+            context: context,
+            builder: (ctx) => AlertDialog(
+                  title: Text('An error occurred!'),
+                  content: Text('Something went wrong'),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text("Okay"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    )
+                  ],
+                ));
+      }
     } else {
       // add a new product into Products provider
       try {
@@ -126,13 +140,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     )
                   ],
                 ));
-      } finally {
-        setState(() {
-          _isLoading = false;
-        });
-        Navigator.of(context).pop();
       }
     }
+    setState(() {
+      _isLoading = false;
+    });
+    Navigator.of(context).pop();
+
     // Navigator.of(context).pop();
   }
 
