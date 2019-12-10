@@ -5,6 +5,7 @@ import '../screens/product_detail_screen.dart';
 
 import '../providers/product.dart';
 import '../providers/cart.dart';
+import '../providers/auth.dart';
 
 class ProductItem extends StatelessWidget {
   // final String id;
@@ -21,6 +22,7 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context);
     final cart = Provider.of<Cart>(context, listen: false);
+    final authToken = Provider.of<Auth>(context, listen: false);
 
     // when we have an image and want to round it, use ClipRRect - R sands for Rounded
     return ClipRRect(
@@ -43,7 +45,7 @@ class ProductItem extends StatelessWidget {
                 product.isFavorite ? Icons.favorite : Icons.favorite_border),
             color: Theme.of(context).accentColor,
             onPressed: () {
-              product.toggleFavoriteStatus();
+              product.toggleFavoriteStatus(authToken.token, authToken.userId);
             },
           ),
           trailing: IconButton(
